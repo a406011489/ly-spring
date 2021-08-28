@@ -26,7 +26,7 @@ public class ProxyFactory {
         // 获取代理对象
         return Proxy.newProxyInstance(obj.getClass().getClassLoader(), obj.getClass().getInterfaces(),
                 (proxy, method, args) -> {
-                    Object result = null;
+                    Object result;
 
                     try {
                         // 开启事务(关闭事务的自动提交)

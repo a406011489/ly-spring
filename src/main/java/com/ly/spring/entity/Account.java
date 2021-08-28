@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Account {
-    private String cardNo;
+    private String account;
     private String name;
     private int money;
 }

@@ -31,8 +31,8 @@ public class BeanFactory {
             Document document = saxReader.read(resourceAsStream);
             Element rootElement = document.getRootElement();
             List<Element> beanList = rootElement.selectNodes("//bean");
-            for (int i = 0; i < beanList.size(); i++) {
-                Element element = beanList.get(i);
+
+            for (Element element : beanList) {
                 // 处理每个bean元素，获取到该元素的id 和 class 属性
                 String id = element.attributeValue("id");
                 String clazz = element.attributeValue("class");
@@ -76,6 +76,7 @@ public class BeanFactory {
                 // 把处理之后的parentObject重新放到map中
                 map.put(parentId, parentObject);
             }
+            System.out.println("BeanFactory的static代码块执行完毕");
         } catch (Exception e) {
             e.printStackTrace();
         }

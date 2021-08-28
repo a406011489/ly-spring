@@ -26,43 +26,48 @@ public class JdbcAccountDaoImpl implements AccountDao {
     }
 
     @Override
-    public Account queryAccountByCardNo(String cardNo) throws Exception {
-        //从连接池获取连接
+    public Account queryAccountByCardNo(String account) throws Exception {
+
+        // 从当前线程获取连接
         Connection con = connectionUtils.getCurrentThreadCon();
-        String sql = "select * from account where cardNo=?";
+
+        String sql = "select * from account where account=?";
+
         PreparedStatement preparedStatement = con.prepareStatement(sql);
-        preparedStatement.setString(1,cardNo);
+
+        preparedStatement.setString(1,account);
+
         ResultSet resultSet = preparedStatement.executeQuery();
 
-        Account account = new Account();
+        Account account1 = new Account();
         while(resultSet.next()) {
-            account.setCardNo(resultSet.getString("cardNo"));
-            account.setName(resultSet.getString("name"));
-            account.setMoney(resultSet.getInt("money"));
+            account1.setAccount(resultSet.getString("account"));
+            account1.setName(resultSet.getString("name"));
+            account1.setMoney(resultSet.getInt("money"));
         }
 
         resultSet.close();
         preparedStatement.close();
         //con.close();
 
-        return account;
+        return account1;
     }
 
     @Override
-    public int updateAccountByCardNo(Account account) throws Exception {
+    public void updateAccountByCardNo(Account account) throws Exception {
 
-        // 从连接池获取连接
-        // 改造为：从当前线程当中获取绑定的connection连接
-        //Connection con = DruidUtils.getInstance().getConnection();
+        // 从当前线程获取数据库连接
         Connection con = connectionUtils.getCurrentThreadCon();
-        String sql = "update account set money=? where cardNo=?";
-        PreparedStatement preparedStatement = con.prepareStatement(sql);
-        preparedStatement.setInt(1,account.getMoney());
-        preparedStatement.setString(2,account.getCardNo());
-        int i = preparedStatement.executeUpdate();
 
+        String sql = "update account set money=? where account=?";
+
+        PreparedStatement preparedStatement = con.prepareStatement(sql);
+
+        preparedStatement.setInt(1,account.getMoney());
+        preparedStatement.setString(2,account.getAccount());
+
+        preparedStatement.executeUpdate();
         preparedStatement.close();
         //con.close();
-        return i;
     }
 }

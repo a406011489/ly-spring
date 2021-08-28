@@ -20,15 +20,15 @@ public class TransferServiceImpl implements TransferService {
             // 开启事务(关闭事务的自动提交)
             TransactionManager.getInstance().beginTransaction();*/
 
-            Account from = accountDao.queryAccountByCardNo(fromCardNo);
-            Account to = accountDao.queryAccountByCardNo(toCardNo);
+        Account from = accountDao.queryAccountByCardNo(fromCardNo);
+        Account to = accountDao.queryAccountByCardNo(toCardNo);
 
-            from.setMoney(from.getMoney()-money);
-            to.setMoney(to.getMoney()+money);
+        from.setMoney(from.getMoney() - money);
+        to.setMoney(to.getMoney() + money);
 
-            accountDao.updateAccountByCardNo(to);
-            int c = 1/0;
-            accountDao.updateAccountByCardNo(from);
+        accountDao.updateAccountByCardNo(to);
+//        int c = 1 / 0;
+        accountDao.updateAccountByCardNo(from);
 
         /*    // 提交事务
 
@@ -42,8 +42,6 @@ public class TransferServiceImpl implements TransferService {
             throw e;
 
         }*/
-
-
 
 
     }
