@@ -15,9 +15,9 @@ public class HikariUtils {
     // 那程序启动时，会自动执行static代码块，把光连接池注入进去
     static {
         hikariDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        hikariDataSource.setJdbcUrl("jdbc:mysql://localhost:3306/user?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=GMT%2B8");
+        hikariDataSource.setJdbcUrl("jdbc:mysql://localhost:3306/ly_spring?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8");
         hikariDataSource.setUsername("root");
-        hikariDataSource.setPassword("begin123");
+        hikariDataSource.setPassword("123456");
     }
 
     public static HikariDataSource getInstance() {

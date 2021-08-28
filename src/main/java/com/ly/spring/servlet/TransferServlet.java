@@ -25,7 +25,7 @@ public class TransferServlet extends HttpServlet {
 
     // 直接重写doGet方法
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         String fromCardNo = req.getParameter("fromCardNo");
         String toCardNo = req.getParameter("toCardNo");

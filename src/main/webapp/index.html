@@ -72,11 +72,11 @@
 
                 $.ajax({
                     url: 'http://localhost:8080/ly/transferServlet',
-                    type: 'GET',    //GET
+                    type: 'POST',    //GET
                     async: false,    //或false,是否异步
                     data: {
-                        fromCardNo: fromAccount.split(' ')[1],
-                        toCardNo: toAccount.split(' ')[1],
+                        fromCardNo: fromAccount,
+                        toCardNo: toAccount,
                         money: money
                     },
                     timeout: 5000,    //超时时间

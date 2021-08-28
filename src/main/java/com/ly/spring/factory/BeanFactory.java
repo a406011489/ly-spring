@@ -48,8 +48,7 @@ public class BeanFactory {
             // 有property子元素的bean就有传值需求
             List<Element> propertyList = rootElement.selectNodes("//property");
             // 解析property，获取父元素
-            for (int i = 0; i < propertyList.size(); i++) {
-                Element element = propertyList.get(i);
+            for (Element element : propertyList) {
                 String name = element.attributeValue("name");
                 String ref = element.attributeValue("ref");
 
@@ -64,8 +63,8 @@ public class BeanFactory {
 
                 // 遍历父对象中的所有方法，找到"set" + name
                 Method[] methods = parentObject.getClass().getMethods();
-                for (int j = 0; j < methods.length; j++) {
-                    Method method = methods[j];
+
+                for (Method method : methods) {
                     // 拿到 set 该属性的方法。
                     if (method.getName().equalsIgnoreCase("set" + name)) {
                         // 这里的 ref 相当于 bean 标签中的 id
