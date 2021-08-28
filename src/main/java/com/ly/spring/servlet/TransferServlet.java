@@ -1,5 +1,6 @@
 package com.ly.spring.servlet;
 
+import com.ly.spring.entity.Result;
 import com.ly.spring.factory.BeanFactory;
 import com.ly.spring.factory.ProxyFactory;
 import com.ly.spring.service.TransferService;
@@ -20,8 +21,10 @@ import java.io.IOException;
 public class TransferServlet extends HttpServlet {
 
     // 首先从BeanFactory获取到proxyFactory代理工厂的实例化对象
-    private final static ProxyFactory proxyFactory = (ProxyFactory) BeanFactory.getBean("proxyFactory");
-    private final static TransferService transferService = (TransferService) proxyFactory.getJdkProxy(BeanFactory.getBean("transferService")) ;
+    private final ProxyFactory proxyFactory = (ProxyFactory) BeanFactory.getBean("proxyFactory");
+
+    // 拿到一个代理对象
+    private final TransferService transferService = (TransferService) proxyFactory.getJdkProxy(BeanFactory.getBean("transferService")) ;
 
     // 直接重写doGet方法
     @Override
@@ -32,10 +35,20 @@ public class TransferServlet extends HttpServlet {
         String moneyStr = req.getParameter("money");
         int money = Integer.parseInt(moneyStr);
 
+        Result result = new Result();
+
         try {
-            transferService.transfer(fromCardNo, toCardNo, money);
+            // 2. 调用service层方法
+            transferService.transfer(fromCardNo,toCardNo,money);
+            result.setStatus("200");
         } catch (Exception e) {
             e.printStackTrace();
+            result.setStatus("201");
+            result.setMessage(e.toString());
         }
+
+        // 响应
+        resp.setContentType("application/json;charset=utf-8");
+        resp.getWriter().print("成功");
     }
 }
